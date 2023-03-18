@@ -19,5 +19,5 @@ from AppCoder.views import guardar_curso
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('curso/', guardar_curso),
+    path('curso/<camada>', guardar_curso),
 ]
