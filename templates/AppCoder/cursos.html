@@ -2,7 +2,17 @@
 
 
 {% block contenido_cambia %}
-    <h1>El contenido ha sido modificado</h1>
+    <form action="{% url 'AppCoderCursos' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Crear">
+    </form>
+    <br><hr>
+    <form action="{% url 'AppCoderBuscarCursos' %}">
+        {{ form_busqueda.as_p }}
+        <input type="submit" value="Buscar">
+    </form>
+    <hr><br>
     {% if cursos %}
         {% for curso in cursos %}
             <p>curso: {{ curso.nombre }}</p>
