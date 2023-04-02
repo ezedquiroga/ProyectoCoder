@@ -4,6 +4,39 @@ from django.contrib.auth import login, authenticate
 from account.forms import UserRegisterForm
 
 
+def editar_usuario(request):
+
+    user = request.user
+
+    if request.method == "POST":
+        #form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
+
+        if form.is_valid():
+            informacion = form.cleaned_data
+
+            user.username = informacion["username"]
+            user.email = informacion["email"]
+            user.is_staff = informacion["is_staff"]
+
+            user.save()
+            return redirect("accountlogin")
+
+    form = UserRegisterForm(initial={
+        "username": user.username,
+        "email": user.email,
+        "is_staff": user.is_staff
+
+    })
+
+    context = {
+        "form": form,
+        "titulo": "Editar usuario",
+        "enviar": "Editar"
+    }
+
+    return render(request, "form.html", context=context)
+
 def register_account(request):
     if request.method == "POST":
         #form = UserCreationForm(request.POST)
@@ -15,9 +48,11 @@ def register_account(request):
     #form = UserCreationForm()
     form = UserRegisterForm()
     context = {
-        "form": form
+        "form": form,
+        "titulo": "Registrar usuario",
+        "enviar": "Registrar"
     }
-    return render(request, "account/login.html", context=context)
+    return render(request, "form.html", context=context)
 
 # Create your views here.
 def login_account(request):
@@ -38,7 +73,9 @@ def login_account(request):
 
     form = AuthenticationForm()
     context = {
-        "form": form
+        "form": form,
+        "titulo": "Login",
+        "enviar": "Iniciar"
     }
-    return render(request, "account/login.html", context=context)
+    return render(request, "form.html", context=context)
 
