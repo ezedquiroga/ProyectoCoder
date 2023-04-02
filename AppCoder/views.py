@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from AppCoder.models import Curso
 from AppCoder.forms import CursoForm, BusquedaCursoForm
 # Create your views here.
+
 
 def busqueda_curso(request):
     mi_formulario = BusquedaCursoForm(request.GET)
@@ -14,6 +16,7 @@ def busqueda_curso(request):
 
         return render(request, "AppCoder/busqueda_curso.html", context=context)
 
+@login_required
 def editar_curso(request, camada):
     get_curso = Curso.objects.get(camada=camada)
 
