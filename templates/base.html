@@ -25,6 +25,7 @@
                 <a class="navbar-brand" href="{% url 'AppCoderCursosProfesores' %}">Profesores</a>
 
                 {% if user.is_authenticated %}
+                    <img src="{{ user.avatar.imagen.url }}" alt="Usuario" height="50 px">
                     <a class="navbar-brand">{{ user.username }}</a>
                     <a class="btn btn-primary" href="{% url 'accountlogout' %}">Logout</a>
                 {% else %}
